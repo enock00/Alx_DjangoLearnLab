@@ -1,9 +1,13 @@
 from django.urls import path
-from .views import list_books, LibraryDetailView
-from django.shortcuts import redirect
+from . import views
+from .views import LibraryDetailView, CustomLogoutView
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
-    path('', lambda request: redirect('list_books')),
-    path('books/', list_books, name='list_books'),
-    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+    path('books/', views.book_list, name='book_list'),
+    path('libraries/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+
+    path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+    path('logout/', CustomLogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
+    path('register/', views.register, name='register'),
 ]
