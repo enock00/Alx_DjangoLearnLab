@@ -102,3 +102,4 @@ User = get_user_model()
 def register(request):
     # Example: Create a user manually (not required if using a form)
     user = User.objects.create_user(username='john', email='john@example.com', password='pass')
+
