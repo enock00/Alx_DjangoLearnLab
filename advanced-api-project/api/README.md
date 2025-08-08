@@ -16,3 +16,9 @@ This project demonstrates a Django REST Framework API with custom serializers an
 - Nested serializers handle `Author → Book` relationships.
 - Custom validation ensures `publication_year` is not in the future.
 - `IsAuthenticated` is applied for create, update, and delete operations.
+
+## Running API Tests
+Run:
+python manage.py test api
+
+Tests cover CRUD operations, filtering, searching, ordering, and authentication checks.
