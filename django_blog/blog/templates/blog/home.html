@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="home-container">
+    <div class="hero">
+        <h1 class="hero-title">Welcome to Our Blog!</h1>
+        <p class="hero-subtitle">Your source for great stories, insights, and ideas.</p>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'blog:register' %}" class="cta-button">Join Our Community</a>
+        {% endif %}
+    </div>
+
+    <section class="latest-posts">
+        <h2 class="section-title">Latest Articles</h2>
+        
+        <div class="post-list">
+            <article class="post-card">
+                <h3 class="post-title">First Steps with Django</h3>
+                <p class="post-excerpt">Learn how to set up your first Django project and get a simple web application running in minutes.</p>
+                <a href="#" class="read-more">Read More</a>
+            </article>
+
+            <article class="post-card">
+                <h3 class="post-title">Mastering Python Basics</h3>
+                <p class="post-excerpt">A comprehensive guide to the essential concepts every Python developer should know.</p>
+                <a href="#" class="read-more">Read More</a>
+            </article>
+            
+            <article class="post-card">
+                <h3 class="post-title">Understanding Web Development</h3>
+                <p class="post-excerpt">From front-end to back-end, this article breaks down the core components of modern web development.</p>
+                <a href="#" class="read-more">Read More</a>
+            </article>
+        </div>
+    </section>
+
+    <aside class="sidebar">
+        <h3 class="sidebar-title">About the Blog</h3>
+        <p>This is a place where we explore topics in technology, programming, and web development. Our goal is to provide high-quality, easy-to-understand content for developers of all levels.</p>
+    </aside>
+
+</main>
+{% endblock %}
