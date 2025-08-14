@@ -14,3 +14,11 @@ User will login using username and password, when the details provided by the us
 users will logout and will be redirected to homepage.
 # Profile management 
 When the user login, he/she will be able to edit profile picture and username.
+
+
+# Post Features
+Create post → only when logged in
+Edit post → only when you are the author
+Delete post → only when you are the author
+View posts → everyone can view list & detail pages
+Navigation links → all links between views work
