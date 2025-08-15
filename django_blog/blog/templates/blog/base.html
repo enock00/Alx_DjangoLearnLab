@@ -8,13 +8,13 @@
 <body>
     <header>
         <nav>
-            <a href="{% url 'blog:home' %}">Home</a>
+            <a href="{% url 'home' %}">Home</a>
             {% if user.is_authenticated %}
-                <a href="{% url 'blog:profile' %}">Profile</a>
-                <a href="{% url 'blog:logout' %}">Log Out</a>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'logout' %}">Log Out</a>
             {% else %}
-                <a href="{% url 'blog:login' %}">Log In</a>
-                <a href="{% url 'blog:register' %}">Register</a>
+                <a href="{% url 'login' %}">Log In</a>
+                <a href="{% url 'register' %}">Register</a>
             {% endif %}
         </nav>
     </header>

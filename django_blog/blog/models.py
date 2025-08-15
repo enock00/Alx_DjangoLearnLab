@@ -12,7 +12,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     def get_absolute_url(self):
-        return reverse('blog:post-detail', kwargs={'pk': self.pk})
+        return reverse('post-detail', kwargs={'pk': self.pk})
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
