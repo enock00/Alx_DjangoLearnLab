@@ -2,7 +2,7 @@
 
 {% for comment in post.comments.all %}
   <div class="comment">
-      <p><strong>{{ comment.author.username }}</strong> - {{ comment.created_date|date:"M d, Y H:i" }}</p>
+      <p><strong>{{ comment.author.username }}</strong> - {{ comment.created_at|date:"M d, Y H:i" }}</p>
       <p>{{ comment.content }}</p>
 
       {% if comment.author == user %}
@@ -24,3 +24,11 @@
 {% else %}
   <p><a href="{% url 'login' %}">Login</a> to add a comment.</p>
 {% endif %}
+
+<p><strong>Tags:</strong>
+  {% for tag in post.tags.all %}
+    <a href="{% url 'posts-by-tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+  {% empty %}
+    No tags
+  {% endfor %}
+</p>
