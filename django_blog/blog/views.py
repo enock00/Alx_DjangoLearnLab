@@ -116,20 +116,21 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == post.author
 
 @login_required
-def add_comment(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user
-            comment.save()
-            messages.success(request, "Your comment was posted.")
-            return redirect('post-detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'blog/comment_form.html', {'form': form, 'post': post})
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
+
+    def form_valid(self, form):
+        # Attach post and author before saving
+        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
+        form.instance.post = post
+        form.instance.author = self.request.user
+        messages.success(self.request, "Your comment was posted.")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('post-detail', kwargs={'pk': self.kwargs['post_id']})
 
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -175,11 +176,11 @@ def posts_by_tag(request, tag_name):
 
 class PostByTagListView(ListView):
     model = Post
-    template_name = "blog/post_list.html"  # reuse your post list template
+    template_name = "blog/post_list.html"  
     context_object_name = "posts"
 
     def get_queryset(self):
-        # get tag slug from the URL
+        
         tag_slug = self.kwargs.get("tag_slug")
         self.tag = get_object_or_404(Tag, slug=tag_slug)
         return Post.objects.filter(tags=self.tag)
