@@ -49,13 +49,12 @@ class LikePostView(generics.GenericAPIView):
     def post(self, request, pk):
         post = generics.get_object_or_404(Post, pk=pk)
 
-        
-        if Like.objects.filter(user=request.user, post=post).exists():
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+        if not created:
             return Response({"message": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
 
-    
-        Like.objects.create(user=request.user, post=post)
-
+        
         if post.author != request.user:
             Notification.objects.create(
                 user=post.author,
