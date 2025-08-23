@@ -24,3 +24,5 @@
 
 Endpoint: POST /api/accounts/users/<id>/follow/
 Headers: Authorization: Bearer <token>
+
+POST /api/posts/{post_id}/like/
