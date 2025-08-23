@@ -1,15 +1,15 @@
 from rest_framework import viewsets, permissions
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+from rest_framework import generics
 
 
-# Custom permission so only the author can update/delete
 class IsAuthorOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        # Read-only permissions are allowed for any request
+    
         if request.method in permissions.SAFE_METHODS:
             return True
-        # Write permissions only for the author
+        
         return obj.author == request.user
 
 
@@ -30,4 +30,11 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+class FeedView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        
+        following_users = self.request.user.following.all()
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')

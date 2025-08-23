@@ -21,3 +21,6 @@
 - **Retrieve**: `GET /api/comments/{id}/`
 - **Update**: `PATCH /api/comments/{id}/` (Author only)
 - **Delete**: `DELETE /api/comments/{id}/` (Author only)
+
+Endpoint: POST /api/accounts/users/<id>/follow/
+Headers: Authorization: Bearer <token>
