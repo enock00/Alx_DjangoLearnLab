@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-s6cg_vwd$9s&&sh$5yi*y#$0ai!+acgn*mq^8$%lversa96pc4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [social_media_api.herokuapp.com]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "social-media-apidemo.herokuapp.com"]
 
 
 # Application definition
@@ -92,6 +92,15 @@ DATABASES = {
     }
 }
 
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True
+    )
+    # Ensure PORT is always present for checks
+    DATABASES['default']['PORT'] = DATABASES['default'].get('PORT', '5432')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
